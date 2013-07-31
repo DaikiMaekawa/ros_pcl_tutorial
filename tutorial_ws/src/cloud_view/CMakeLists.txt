@@ -22,9 +22,15 @@ catkin_package(
 
 link_directories(${PCL_LIBRARY_DIRS})
 add_definitions(${PCL_DEFINITIONS})
-add_executable(cloud_view src/cloud_view.cpp)
+add_executable(cloud_view  src/cloud_view.cpp)
+add_executable(xtion_cloud_view src/xtion_cloud_view.cpp)
 
 target_link_libraries(cloud_view
+    ${PCL_LIBRARIES}
+    ${catkin_LIBRARIES}
+)
+
+target_link_libraries(xtion_cloud_view
     ${PCL_LIBRARIES}
     ${catkin_LIBRARIES}
 )
