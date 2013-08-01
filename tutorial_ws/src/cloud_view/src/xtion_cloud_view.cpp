@@ -10,26 +10,43 @@
 #include <ros/ros.h>
 #include <pcl_ros/point_cloud.h>
 #include <pcl/point_types.h>
-#include <boost/foreach.hpp>
-#include <iostream>
 #include <pcl/io/pcd_io.h>
 #include <pcl/visualization/cloud_viewer.h>
+#include <boost/lambda/lambda.hpp>
+#include <boost/bind.hpp>
 
-typedef pcl::PointCloud<pcl::PointXYZRGB> PointCloud;
+class RosCloudViewer{
+    pcl::visualization::CloudViewer m_viewer;
+    ros::Subscriber m_pcSub;
 
-pcl::visualization::CloudViewer viewer("RGB-D Sensor Cloud Viewer");
+public:
+    typedef pcl::PointCloud<pcl::PointXYZRGB> PointCloud;
+    RosCloudViewer(ros::NodeHandle &node) : 
+        m_viewer("RGB-D Sensor Cloud Viewer"),
+	m_pcSub(node.subscribe<PointCloud>("points", 1, 
+	    boost::bind(&RosCloudViewer::receivePointCloudCb, this, boost::lambda::_1)))
+    { 
+    
+    }
 
-void receivePointCloudCb(const PointCloud::ConstPtr &msg){
-    std::cout << "Cloud: width = " << msg->width << ", height = " << msg->height << std::endl;
-    viewer.showCloud(msg->makeShared());
-}
+    void run(){
+        ros::spin();
+    }
+
+private:
+    void receivePointCloudCb(const PointCloud::ConstPtr &msg){
+        m_viewer.showCloud(msg->makeShared());
+    }
+   
+};
+
 
 int main(int argc, char *argv[]){
     ros::init(argc, argv, "cloud_viewer");
     ros::NodeHandle node;
-    ros::Subscriber sub = node.subscribe<PointCloud>("points", 1, receivePointCloudCb);
+    RosCloudViewer rViewer(node);
 
-    ros::spin();
+    rViewer.run();
 
     return 0;
 }
