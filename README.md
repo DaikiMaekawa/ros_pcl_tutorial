@@ -19,6 +19,6 @@ rosrun cloud_view xtion_cloud_view points:=/camera/depth_registered/points
 
 rosbag play point_cloud.bag
 
-##免責事項
+## ライセンス
 
-このプログラムによって発生した、いかなる障害・損害も作成者は一切責任を負わないものとする。
+MIT
