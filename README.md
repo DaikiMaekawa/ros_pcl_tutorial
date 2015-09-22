@@ -1,9 +1,9 @@
 ros_pcl_tutorial
 ================
 
-ROS勉強会<入門編>に使用したPCLのチュートリアルです
+ROS勉強会(入門編)に使用したPCLのチュートリアルです
 
-　→　[ROS勉強会について](https://github.com/DaikiMaekawa/description/tree/master/ros_tutorial "ROS勉強会のPDF")
+ * [ROS勉強会について](https://github.com/DaikiMaekawa/description/tree/master/ros_tutorial "ROS勉強会のPDF")
 
 ## ビルド
 
